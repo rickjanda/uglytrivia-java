@@ -127,7 +127,7 @@ public class Game {
 				+ currentPlayer.getPurse()
 				+ " Gold Coins.");
 		
-		boolean notWinner = !didPlayerWin();
+		boolean notWinner = !getCurrentPlayer().didPlayerWin();
 		nextPlayer();
 		
 		return notWinner;
@@ -145,9 +145,5 @@ public class Game {
 		
 		nextPlayer();
 		return true;
-	}
-
-	private boolean didPlayerWin() {
-		return getCurrentPlayer().getPurse() == 6;
 	}
 }
