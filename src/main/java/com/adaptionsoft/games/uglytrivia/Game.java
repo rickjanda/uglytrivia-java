@@ -10,6 +10,7 @@ public class Game {
     int[] purses  = new int[6];
     boolean[] inPenaltyBox  = new boolean[6];
 
+	// duplicate??
     LinkedList popQuestions = new LinkedList();
     LinkedList scienceQuestions = new LinkedList();
     LinkedList sportsQuestions = new LinkedList();
@@ -27,6 +28,7 @@ public class Game {
 	Game(PrintStream printStream) {
 		out = printStream;
 		for (int i = 0; i < 50; i++) {
+			// duplicate??
 			popQuestions.addLast("Pop Question " + i);
 			scienceQuestions.addLast(("Science Question " + i));
 			sportsQuestions.addLast(("Sports Question " + i));
@@ -45,6 +47,7 @@ public class Game {
 
 	public boolean add(String playerName) {
 		
+		// nicht intention revealing
 	    players.add(playerName);
 	    places[howManyPlayers()] = 0;
 	    purses[howManyPlayers()] = 0;
@@ -82,6 +85,7 @@ public class Game {
 				}
 			
 		} else {
+			//duplicate Zeilte 72
 			places[currentPlayer] = places[currentPlayer] + roll;
 			if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
 			
@@ -95,6 +99,8 @@ public class Game {
 	}
 
 	private void askQuestion() {
+		//duplicate zweizeiler
+		// pop + science + rock als string duplicate
 		if (currentCategory() == "Pop")
 			out.println(popQuestions.removeFirst());
 		if (currentCategory() == "Science")
@@ -107,6 +113,7 @@ public class Game {
 	
 	
 	private String currentCategory() {
+		//duplicate lines
 		if (places[currentPlayer] == 0) return "Pop";
 		if (places[currentPlayer] == 4) return "Pop";
 		if (places[currentPlayer] == 8) return "Pop";
@@ -122,6 +129,7 @@ public class Game {
 	public boolean wasCorrectlyAnswered() {
 		if (inPenaltyBox[currentPlayer]){
 			if (isGettingOutOfPenaltyBox) {
+				//duplicate mit else weiter unten
 				out.println("Answer was correct!!!!");
 				purses[currentPlayer]++;
 				out.println(players.get(currentPlayer)
@@ -130,6 +138,7 @@ public class Game {
 						+ " Gold Coins.");
 				
 				boolean winner = didPlayerWin();
+				//zwei Teilen duplicate (4x)
 				currentPlayer++;
 				if (currentPlayer == players.size()) currentPlayer = 0;
 				
