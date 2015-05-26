@@ -70,33 +70,27 @@ public class Game {
 				isGettingOutOfPenaltyBox = true;
 				
 				out.println(players.get(currentPlayer) + " is getting out of the penalty box");
-				//Small duplication
-				places[currentPlayer] = places[currentPlayer] + roll;
-				if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
-				
-				out.println(players.get(currentPlayer)
-						+ "'s new location is "
-						+ places[currentPlayer]);
-				out.println("The category is " + currentCategory());
-				askQuestion();
-				//End duplicate
+				advancePlayerAndAskQuestion(roll);
 			} else {
 				out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
 				isGettingOutOfPenaltyBox = false;
 				}
 			
 		} else {
-			//duplicate Zeilte 73
-			places[currentPlayer] = places[currentPlayer] + roll;
-			if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
-			
-			out.println(players.get(currentPlayer)
-					+ "'s new location is "
-					+ places[currentPlayer]);
-			out.println("The category is " + currentCategory());
-			askQuestion();
+			advancePlayerAndAskQuestion(roll);
 		}
 		
+	}
+
+	void advancePlayerAndAskQuestion(int roll) {
+		places[currentPlayer] = places[currentPlayer] + roll;
+		if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
+		
+		out.println(players.get(currentPlayer)
+				+ "'s new location is "
+				+ places[currentPlayer]);
+		out.println("The category is " + currentCategory());
+		askQuestion();
 	}
 
 	private void askQuestion() {
@@ -131,43 +125,34 @@ public class Game {
 		if (inPenaltyBox[currentPlayer]){
 			if (isGettingOutOfPenaltyBox) {
 				//duplicate mit else weiter unten
-				out.println("Answer was correct!!!!");
-				purses[currentPlayer]++;
-				out.println(players.get(currentPlayer)
-						+ " now has "
-						+ purses[currentPlayer]
-						+ " Gold Coins.");
-				
-				boolean winner = didPlayerWin();
-				//zwei Zeiler duplicate (4x, mini)
-				currentPlayer++;
-				if (currentPlayer == players.size()) currentPlayer = 0;
-				
-				return winner;
+				return addPursesAndDidPlayerWin();
 				//End duplicate
 			} else {
-				currentPlayer++;
-				if (currentPlayer == players.size()) currentPlayer = 0;
+				nextPlayer();
 				return true;
 			}
-			
-			
-			
 		} else {
-		
-			out.println("Answer was corrent!!!!");
-			purses[currentPlayer]++;
-			out.println(players.get(currentPlayer)
-					+ " now has "
-					+ purses[currentPlayer]
-					+ " Gold Coins.");
-			
-			boolean winner = didPlayerWin();
-			currentPlayer++;
-			if (currentPlayer == players.size()) currentPlayer = 0;
-			
-			return winner;
+			return addPursesAndDidPlayerWin();
 		}
+	}
+
+	private boolean addPursesAndDidPlayerWin() {
+		out.println("Answer was correct!!!!");
+		purses[currentPlayer]++;
+		out.println(players.get(currentPlayer)
+				+ " now has "
+				+ purses[currentPlayer]
+				+ " Gold Coins.");
+		
+		boolean winner = didPlayerWin();
+		nextPlayer();
+		
+		return winner;
+	}
+	
+	private void nextPlayer() {
+		currentPlayer++;
+		if (currentPlayer == players.size()) currentPlayer = 0;
 	}
 	
 	public boolean wrongAnswer(){
@@ -175,11 +160,9 @@ public class Game {
 		out.println(players.get(currentPlayer) + " was sent to the penalty box");
 		inPenaltyBox[currentPlayer] = true;
 		
-		currentPlayer++;
-		if (currentPlayer == players.size()) currentPlayer = 0;
+		nextPlayer();
 		return true;
 	}
-
 
 	private boolean didPlayerWin() {
 		return !(purses[currentPlayer] == 6);
