@@ -95,23 +95,21 @@ public class Game {
 
 	private void askQuestion() {
 		//duplicate zweizeiler
-		// pop + science + rock als string duplicate
-		if (currentCategory() == "Pop")
+		if (currentCategory() == QuestionCategory.POP)
 			out.println(popQuestions.removeFirst());
-		if (currentCategory() == "Science")
+		if (currentCategory() == QuestionCategory.SCIENCE)
 			out.println(scienceQuestions.removeFirst());
-		if (currentCategory() == "Sports")
+		if (currentCategory() == QuestionCategory.SPORTS)
 			out.println(sportsQuestions.removeFirst());
-		if (currentCategory() == "Rock")
+		if (currentCategory() == QuestionCategory.ROCK)
 			out.println(rockQuestions.removeFirst());
 	}
-	
-	
-	private String currentCategory() {
-		if (places[currentPlayer] % 4 == 0) return "Pop";
-		if (places[currentPlayer] % 4 == 1) return "Science";
-		if (places[currentPlayer] % 4 == 2) return "Sports";
-		return "Rock";
+
+	private QuestionCategory currentCategory() {
+		if (places[currentPlayer] % 4 == 0) return QuestionCategory.POP;
+		if (places[currentPlayer] % 4 == 1) return QuestionCategory.SCIENCE;
+		if (places[currentPlayer] % 4 == 2) return QuestionCategory.SPORTS;
+		return QuestionCategory.ROCK;
 	}
 
 	public boolean wasCorrectlyAnswered() {
