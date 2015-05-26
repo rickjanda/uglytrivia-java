@@ -10,7 +10,7 @@ public class Game {
     int[] purses  = new int[6];
     boolean[] inPenaltyBox  = new boolean[6];
 
-	// duplicate??
+	// duplicate
     LinkedList popQuestions = new LinkedList();
     LinkedList scienceQuestions = new LinkedList();
     LinkedList sportsQuestions = new LinkedList();
@@ -28,11 +28,11 @@ public class Game {
 	Game(PrintStream printStream) {
 		out = printStream;
 		for (int i = 0; i < 50; i++) {
-			// duplicate??
+			// duplicate
 			popQuestions.addLast("Pop Question " + i);
 			scienceQuestions.addLast(("Science Question " + i));
 			sportsQuestions.addLast(("Sports Question " + i));
-			rockQuestions.addLast(createRockQuestion(i));
+			rockQuestions.addLast(createRockQuestion(i));	//Inline
 		}
 
 	}
@@ -46,7 +46,6 @@ public class Game {
 	}
 
 	public boolean add(String playerName) {
-		
 		// nicht intention revealing
 	    players.add(playerName);
 	    places[howManyPlayers()] = 0;
@@ -71,6 +70,7 @@ public class Game {
 				isGettingOutOfPenaltyBox = true;
 				
 				out.println(players.get(currentPlayer) + " is getting out of the penalty box");
+				//Small duplication
 				places[currentPlayer] = places[currentPlayer] + roll;
 				if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
 				
@@ -79,13 +79,14 @@ public class Game {
 						+ places[currentPlayer]);
 				out.println("The category is " + currentCategory());
 				askQuestion();
+				//End duplicate
 			} else {
 				out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
 				isGettingOutOfPenaltyBox = false;
 				}
 			
 		} else {
-			//duplicate Zeilte 72
+			//duplicate Zeilte 73
 			places[currentPlayer] = places[currentPlayer] + roll;
 			if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
 			
@@ -113,7 +114,7 @@ public class Game {
 	
 	
 	private String currentCategory() {
-		//duplicate lines
+		//duplicate lines / strings
 		if (places[currentPlayer] == 0) return "Pop";
 		if (places[currentPlayer] == 4) return "Pop";
 		if (places[currentPlayer] == 8) return "Pop";
@@ -138,11 +139,12 @@ public class Game {
 						+ " Gold Coins.");
 				
 				boolean winner = didPlayerWin();
-				//zwei Teilen duplicate (4x)
+				//zwei Zeiler duplicate (4x, mini)
 				currentPlayer++;
 				if (currentPlayer == players.size()) currentPlayer = 0;
 				
 				return winner;
+				//End duplicate
 			} else {
 				currentPlayer++;
 				if (currentPlayer == players.size()) currentPlayer = 0;
