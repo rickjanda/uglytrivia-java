@@ -140,7 +140,7 @@ public class Game {
 		currentPlayer++;
 		if (currentPlayer == players.size()) currentPlayer = 0;
 	}
-	
+
 	public boolean wrongAnswer(){
 		out.println("Question was incorrectly answered");
 		out.println(players.get(currentPlayer) + " was sent to the penalty box");
