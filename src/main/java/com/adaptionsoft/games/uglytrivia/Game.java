@@ -6,7 +6,6 @@ import java.util.LinkedList;
 
 public class Game {
 	ArrayList<Player> players = new ArrayList<>();
-    int[] places = new int[6];
     int[] purses  = new int[6];
     boolean[] inPenaltyBox  = new boolean[6];
 
@@ -48,7 +47,6 @@ public class Game {
 	public boolean add(String playerName) {
 		Player player = new Player(playerName);
 	    players.add(player);
-	    places[howManyPlayers()] = 0;
 	    purses[howManyPlayers()] = 0;
 	    inPenaltyBox[howManyPlayers()] = false;
 	    
@@ -62,17 +60,17 @@ public class Game {
 	}
 	
 	public void roll(int roll) {
-		out.println(getCurrentPlayer() + " is the current player");
+		out.println(getCurrentPlayer().getName() + " is the current player");
 		out.println("They have rolled a " + roll);
 		
 		if (inPenaltyBox[currentPlayer]) {
 			if (roll % 2 != 0) {
 				isGettingOutOfPenaltyBox = true;
 				
-				out.println(getCurrentPlayer() + " is getting out of the penalty box");
+				out.println(getCurrentPlayer().getName() + " is getting out of the penalty box");
 				advancePlayerAndAskQuestion(roll);
 			} else {
-				out.println(getCurrentPlayer() + " is not getting out of the penalty box");
+				out.println(getCurrentPlayer().getName() + " is not getting out of the penalty box");
 				isGettingOutOfPenaltyBox = false;
 				}
 			
@@ -82,17 +80,17 @@ public class Game {
 		
 	}
 
-	private String getCurrentPlayer() {
-		return players.get(currentPlayer).getName();
+	private Player getCurrentPlayer() {
+		return players.get(currentPlayer);
 	}
 
 	void advancePlayerAndAskQuestion(int roll) {
-		places[currentPlayer] = places[currentPlayer] + roll;
-		if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
+		Player currentPlayer2 = getCurrentPlayer();
+		currentPlayer2.addPlace(roll);
 		
-		out.println(getCurrentPlayer()
+		out.println(currentPlayer2.getName()
 				+ "'s new location is "
-				+ places[currentPlayer]);
+				+ currentPlayer2.getPlace());
 		out.println("The category is " + currentCategory());
 		askQuestion();
 	}
@@ -110,9 +108,10 @@ public class Game {
 	}
 
 	private QuestionCategory currentCategory() {
-		if (places[currentPlayer] % 4 == 0) return QuestionCategory.POP;
-		if (places[currentPlayer] % 4 == 1) return QuestionCategory.SCIENCE;
-		if (places[currentPlayer] % 4 == 2) return QuestionCategory.SPORTS;
+		int place = getCurrentPlayer().getPlace();
+		if (place % 4 == 0) return QuestionCategory.POP;
+		if (place % 4 == 1) return QuestionCategory.SCIENCE;
+		if (place % 4 == 2) return QuestionCategory.SPORTS;
 		return QuestionCategory.ROCK;
 	}
 
@@ -127,7 +126,7 @@ public class Game {
 	private boolean addPursesAndDidPlayerWin() {
 		out.println("Answer was correct!!!!");
 		purses[currentPlayer]++;
-		out.println(getCurrentPlayer()
+		out.println(getCurrentPlayer().getName()
 				+ " now has "
 				+ purses[currentPlayer]
 				+ " Gold Coins.");
@@ -145,7 +144,7 @@ public class Game {
 
 	public boolean wrongAnswer(){
 		out.println("Question was incorrectly answered");
-		out.println(getCurrentPlayer() + " was sent to the penalty box");
+		out.println(getCurrentPlayer().getName() + " was sent to the penalty box");
 		inPenaltyBox[currentPlayer] = true;
 		
 		nextPlayer();
