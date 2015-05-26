@@ -27,4 +27,8 @@ public class Player {
 	public void addPlace(int roll) {
 		place = (place + roll) % 12;
 	}
+
+	public void addPurse() {
+		purse++;
+	}
 }

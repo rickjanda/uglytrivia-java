@@ -6,7 +6,6 @@ import java.util.LinkedList;
 
 public class Game {
 	ArrayList<Player> players = new ArrayList<>();
-    int[] purses  = new int[6];
     boolean[] inPenaltyBox  = new boolean[6];
 
 	// duplicate
@@ -47,7 +46,6 @@ public class Game {
 	public boolean add(String playerName) {
 		Player player = new Player(playerName);
 	    players.add(player);
-	    purses[howManyPlayers()] = 0;
 	    inPenaltyBox[howManyPlayers()] = false;
 	    
 	    out.println(playerName + " was added");
@@ -125,10 +123,11 @@ public class Game {
 
 	private boolean addPursesAndDidPlayerWin() {
 		out.println("Answer was correct!!!!");
-		purses[currentPlayer]++;
-		out.println(getCurrentPlayer().getName()
+		Player currentPlayer2 = getCurrentPlayer();
+		currentPlayer2.addPurse();
+		out.println(currentPlayer2.getName()
 				+ " now has "
-				+ purses[currentPlayer]
+				+ currentPlayer2.getPurse()
 				+ " Gold Coins.");
 		
 		boolean winner = didPlayerWin();
@@ -152,6 +151,6 @@ public class Game {
 	}
 
 	private boolean didPlayerWin() {
-		return !(purses[currentPlayer] == 6);
+		return !(getCurrentPlayer().getPurse() == 6);
 	}
 }
