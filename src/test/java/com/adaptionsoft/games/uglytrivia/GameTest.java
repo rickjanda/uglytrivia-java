@@ -15,7 +15,7 @@ public class GameTest {
     public void test() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         Game aGame = new Game(new PrintStream(out));
-        aGame.add("Chet");
+        aGame.addPlayer("Chet");
         boolean actual = aGame.wrongAnswer();
         assertTrue(actual);
         assertThat(out.toString(), equalToIgnoringWhiteSpace("Chet was added\n" +
@@ -30,16 +30,16 @@ public class GameTest {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         Game aGame = new Game(new PrintStream(out));
 
-        aGame.add("Chet");
-        aGame.add("Pat");
-        aGame.add("Sue");
+        aGame.addPlayer("Chet");
+        aGame.addPlayer("Pat");
+        aGame.addPlayer("Sue");
 
         Random rand = new Random(1);
 
         boolean notAWinner;
         do {
 
-            aGame.roll(rand.nextInt(5) + 1);
+            aGame.rollDice(rand.nextInt(5) + 1);
 
             if (rand.nextInt(9) == 7) {
                 notAWinner = aGame.wrongAnswer();
@@ -170,15 +170,15 @@ public class GameTest {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         Game aGame = new Game(new PrintStream(out));
 
-        aGame.add("Chet");
-        aGame.add("Pat");
+        aGame.addPlayer("Chet");
+        aGame.addPlayer("Pat");
 
         Random rand = new Random(25);
 
         boolean notAWinner;
         do {
 
-            aGame.roll(rand.nextInt(5) + 1);
+            aGame.rollDice(rand.nextInt(5) + 1);
 
             if (rand.nextInt(9) == 7) {
                 notAWinner = aGame.wrongAnswer();
