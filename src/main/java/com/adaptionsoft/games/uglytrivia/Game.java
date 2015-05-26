@@ -14,9 +14,8 @@ public class Game {
     LinkedList rockQuestions = new LinkedList();
     
     int currentPlayer = 0;
-    boolean isGettingOutOfPenaltyBox;
 
-	private PrintStream out;
+    private PrintStream out;
 
 	public  Game() {
 		this(System.out);
@@ -56,18 +55,17 @@ public class Game {
 	}
 	
 	public void roll(int roll) {
-		out.println(getCurrentPlayer().getName() + " is the current player");
+		Player currentPlayer2 = getCurrentPlayer();
+		out.println(currentPlayer2.getName() + " is the current player");
 		out.println("They have rolled a " + roll);
 		
-		if (getCurrentPlayer().isInPenaltyBox()) {
+		if (currentPlayer2.isInPenaltyBox()) {
+			currentPlayer2.setGetOutOfPenaltyBox(roll);
 			if (roll % 2 != 0) {
-				isGettingOutOfPenaltyBox = true;
-				
-				out.println(getCurrentPlayer().getName() + " is getting out of the penalty box");
+				out.println(currentPlayer2.getName() + " is getting out of the penalty box");
 				advancePlayerAndAskQuestion(roll);
 			} else {
-				out.println(getCurrentPlayer().getName() + " is not getting out of the penalty box");
-				isGettingOutOfPenaltyBox = false;
+				out.println(currentPlayer2.getName() + " is not getting out of the penalty box");
 				}
 			
 		} else {
@@ -112,7 +110,8 @@ public class Game {
 	}
 
 	public boolean wasCorrectlyAnswered() {
-		if (getCurrentPlayer().isInPenaltyBox() && !isGettingOutOfPenaltyBox){
+		Player currentPlayer2 = getCurrentPlayer();
+		if (currentPlayer2.isInPenaltyBox() && !currentPlayer2.isGettingOutOfPenaltyBox()){
 			nextPlayer();
 			return true;
 		}

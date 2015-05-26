@@ -6,12 +6,14 @@ public class Player {
 	private int place;
 	private int purse;
 	private boolean inPenaltyBox;
+	private boolean isGettingOutOfPenaltyBox;
 
 	public Player(String playerName) {
 		this.playerName = playerName;
 		place = 0;
 		purse = 0;
 		inPenaltyBox = false;
+		isGettingOutOfPenaltyBox = false;
 	}
 
 	public String getName() {
@@ -37,8 +39,16 @@ public class Player {
 	public boolean isInPenaltyBox() {
 		return inPenaltyBox;
 	}
+	
+	public boolean isGettingOutOfPenaltyBox() {
+		return isGettingOutOfPenaltyBox;
+	}
 
 	public void putIntoPenaltyBox() {
 		inPenaltyBox = true;
+	}
+
+	public void setGetOutOfPenaltyBox(int roll) {
+		isGettingOutOfPenaltyBox = roll % 2 != 0;
 	}
 }
