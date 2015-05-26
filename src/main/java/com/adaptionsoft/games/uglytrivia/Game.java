@@ -6,7 +6,6 @@ import java.util.LinkedList;
 
 public class Game {
 	ArrayList<Player> players = new ArrayList<>();
-    boolean[] inPenaltyBox  = new boolean[6];
 
 	// duplicate
     LinkedList popQuestions = new LinkedList();
@@ -46,7 +45,6 @@ public class Game {
 	public boolean add(String playerName) {
 		Player player = new Player(playerName);
 	    players.add(player);
-	    inPenaltyBox[howManyPlayers()] = false;
 	    
 	    out.println(playerName + " was added");
 	    out.println("They are player number " + howManyPlayers());
@@ -61,7 +59,7 @@ public class Game {
 		out.println(getCurrentPlayer().getName() + " is the current player");
 		out.println("They have rolled a " + roll);
 		
-		if (inPenaltyBox[currentPlayer]) {
+		if (getCurrentPlayer().isInPenaltyBox()) {
 			if (roll % 2 != 0) {
 				isGettingOutOfPenaltyBox = true;
 				
@@ -114,7 +112,7 @@ public class Game {
 	}
 
 	public boolean wasCorrectlyAnswered() {
-		if (inPenaltyBox[currentPlayer] && !isGettingOutOfPenaltyBox){
+		if (getCurrentPlayer().isInPenaltyBox() && !isGettingOutOfPenaltyBox){
 			nextPlayer();
 			return true;
 		}
@@ -144,7 +142,7 @@ public class Game {
 	public boolean wrongAnswer(){
 		out.println("Question was incorrectly answered");
 		out.println(getCurrentPlayer().getName() + " was sent to the penalty box");
-		inPenaltyBox[currentPlayer] = true;
+		getCurrentPlayer().putIntoPenaltyBox();
 		
 		nextPlayer();
 		return true;

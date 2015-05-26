@@ -5,11 +5,13 @@ public class Player {
 	private String playerName;
 	private int place;
 	private int purse;
+	private boolean inPenaltyBox;
 
 	public Player(String playerName) {
 		this.playerName = playerName;
 		place = 0;
 		purse = 0;
+		inPenaltyBox = false;
 	}
 
 	public String getName() {
@@ -30,5 +32,13 @@ public class Player {
 
 	public void addPurse() {
 		purse++;
+	}
+	
+	public boolean isInPenaltyBox() {
+		return inPenaltyBox;
+	}
+
+	public void putIntoPenaltyBox() {
+		inPenaltyBox = true;
 	}
 }
