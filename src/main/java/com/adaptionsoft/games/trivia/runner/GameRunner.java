@@ -7,33 +7,30 @@ import com.adaptionsoft.games.uglytrivia.Game;
 
 public class GameRunner {
 
+	private static boolean notAWinner;
+
 	public static void main(String[] args) {
-		Game game = new Game();
+		Game aGame = new Game();
 		
-		game.addPlayer("Chet");
-		game.addPlayer("Pat");
-		game.addPlayer("Sue");
+		aGame.add("Chet");
+		aGame.add("Pat");
+		aGame.add("Sue");
 		
-		Random random = new Random();
-
-		run(game, random);
-	}
-
-	public static void run(Game game, Random rand) {
-		boolean isWinner;
+		Random rand = new Random();
+	
 		do {
-
-			game.roll(rand.nextInt(5) + 1);
-
+			
+			aGame.roll(rand.nextInt(5) + 1);
+			
 			if (rand.nextInt(9) == 7) {
-				game.wrongAnswer();
+				notAWinner = aGame.wrongAnswer();
 			} else {
-				game.wasCorrectlyAnswered();
+				notAWinner = aGame.wasCorrectlyAnswered();
 			}
-			isWinner = game.isCurrentPlayerTheWinner();
-
-			game.switchToNextPlayer();
-
-		} while (!isWinner);
+			
+			
+			
+		} while (notAWinner);
+		
 	}
 }
