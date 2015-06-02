@@ -33,7 +33,7 @@ public class Game {
 
 	}
 
-	private String createRockQuestion(int index) {
+	public String createRockQuestion(int index) {
 		return "Rock Question " + index;
 	}
 
@@ -41,19 +41,20 @@ public class Game {
 		return (howManyPlayers() >= 2);
 	}
 
-	public void addPlayer(String playerName) {
+	public boolean add(String playerName) {
 		Player player = new Player(playerName);
 		players.add(player);
 
 		out.println(playerName + " was added");
 		out.println("They are player number " + howManyPlayers());
+		return true;
 	}
 
 	private int howManyPlayers() {
 		return players.size();
 	}
 
-	public void rollDice(int roll) {
+	public void roll(int roll) {
 		Player currentPlayer = getCurrentPlayer();
 		out.println(currentPlayer.getName() + " is the current player");
 		out.println("They have rolled a " + roll);
