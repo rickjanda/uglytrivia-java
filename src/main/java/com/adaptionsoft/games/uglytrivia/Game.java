@@ -1,16 +1,10 @@
 package com.adaptionsoft.games.uglytrivia;
 
 import java.io.PrintStream;
-import java.util.LinkedList;
 
 public class Game {
-	// duplicate
-	LinkedList popQuestions = new LinkedList();
-	LinkedList scienceQuestions = new LinkedList();
-	LinkedList sportsQuestions = new LinkedList();
-	LinkedList rockQuestions = new LinkedList();
-
 	PlayerPool playerPool = new PlayerPool();
+	QuestionPool questionPool = new QuestionPool();
 
 	private PrintStream out;
 
@@ -20,18 +14,6 @@ public class Game {
 
 	Game(PrintStream printStream) {
 		out = printStream;
-		for (int i = 0; i < 50; i++) {
-			// duplicate
-			popQuestions.addLast("Pop Question " + i);
-			scienceQuestions.addLast(("Science Question " + i));
-			sportsQuestions.addLast(("Sports Question " + i));
-			rockQuestions.addLast(createRockQuestion(i)); // Inline
-		}
-
-	}
-
-	public String createRockQuestion(int index) {
-		return "Rock Question " + index;
 	}
 
 	public boolean add(String playerName) {
@@ -74,15 +56,8 @@ public class Game {
 	}
 
 	private void askQuestion() {
-		// duplicate zweizeiler
-		if (currentCategory() == QuestionCategory.POP)
-			out.println(popQuestions.removeFirst());
-		if (currentCategory() == QuestionCategory.SCIENCE)
-			out.println(scienceQuestions.removeFirst());
-		if (currentCategory() == QuestionCategory.SPORTS)
-			out.println(sportsQuestions.removeFirst());
-		if (currentCategory() == QuestionCategory.ROCK)
-			out.println(rockQuestions.removeFirst());
+		String removeFirst = questionPool.getQuestion(currentCategory());
+		out.println(removeFirst);
 	}
 
 	private QuestionCategory currentCategory() {
