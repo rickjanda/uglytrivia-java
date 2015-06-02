@@ -51,4 +51,8 @@ public class Player {
 	public void setGetOutOfPenaltyBox(int roll) {
 		isGettingOutOfPenaltyBox = roll % 2 != 0;
 	}
+
+	boolean didPlayerWin() {
+		return getPurse() == 6;
+	}
 }
