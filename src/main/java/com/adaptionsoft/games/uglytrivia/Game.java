@@ -63,18 +63,13 @@ public class Game {
 			playerPool.nextPlayer();
 			return true;
 		}
-		return addPursesAndDidPlayerWin();
-	}
-
-	private boolean addPursesAndDidPlayerWin() {
-		Player currentPlayer = playerPool.getCurrentPlayer();
+		
 		currentPlayer.addPurse();
 		screen.printCorrectAnswerInfo(currentPlayer.getName(), currentPlayer.getPurse());
-
-		boolean notWinner = !currentPlayer.didPlayerWin();
+		
 		playerPool.nextPlayer();
-
-		return notWinner;
+		
+		return !currentPlayer.didPlayerWin();
 	}
 
 	public boolean wrongAnswer() {
