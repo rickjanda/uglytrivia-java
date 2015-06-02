@@ -12,9 +12,9 @@ public class GameRunner {
 	public static void main(String[] args) {
 		Game aGame = new Game();	//What kind of Game?
 		
-		aGame.addPlayer("Chet");	//Add WHAT?
-		aGame.addPlayer("Pat");
-		aGame.addPlayer("Sue");
+		aGame.add("Chet");	//Add WHAT?
+		aGame.add("Pat");
+		aGame.add("Sue");
 		
 		Random rand = new Random();
 	
@@ -22,7 +22,7 @@ public class GameRunner {
 			//Order of operations not intention revealing
 			//Can't tell what exactly the idea is behind wrongAnswer and wasCorrectlyAnswered.
 			
-			aGame.rollDice(rand.nextInt(5) + 1);
+			aGame.roll(rand.nextInt(5) + 1);
 			
 			if (rand.nextInt(9) == 7) {	//Sometimes answer wrongly?
 				notAWinner = aGame.wrongAnswer();
