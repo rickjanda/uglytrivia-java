@@ -31,26 +31,16 @@ public class Game {
 
 		if (currentPlayer.isInPenaltyBox()) {
 			currentPlayer.setGetOutOfPenaltyBox(roll);
-			if (roll % 2 != 0) {
-				screen.printIsGettingOutOfPenaltyBox(currentPlayer.getName());
-				advancePlayerAndAskQuestion(roll);
-			} else {
-				screen.printIsNotGettingOutOfPenaltyBox(currentPlayer.getName());
-			}
-		} else {
-			advancePlayerAndAskQuestion(roll);
+			screen.printIsGettingOutOfPenaltyBox(currentPlayer.getName(), currentPlayer.isGettingOutOfPenaltyBox());
+		} 
+		
+		if (currentPlayer.isInPenaltyBox() && !currentPlayer.isGettingOutOfPenaltyBox()) {
+			return;
 		}
-	}
-
-	private void advancePlayerAndAskQuestion(int roll) {
-		Player currentPlayer = playerPool.getCurrentPlayer();
+		
 		currentPlayer.addPlace(roll);
-
 		screen.printNewLocationInfo(currentPlayer.getName(), currentPlayer.getPlace(), currentCategory());
-		askQuestion();
-	}
-
-	private void askQuestion() {
+		
 		String question = questionPool.getQuestion(currentCategory());
 		screen.printQuestion(question);
 	}

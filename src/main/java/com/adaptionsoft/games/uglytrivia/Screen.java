@@ -22,19 +22,9 @@ public class Screen {
 		out.println("They have rolled a " + roll);
 	}
 
-	void printIsGettingOutOfPenaltyBox(String name) {
-		out.println(name
-				+ " is getting out of the penalty box");
-	}
-
-	void printIsNotGettingOutOfPenaltyBox(String name) {
-		out.println(name
-				+ " is not getting out of the penalty box");
-	}
-
-	void printNewLocationInfo(String name, int place, QuestionCategory currentCategory) {
-		out.println(name + "'s new location is "
-				+ place);
+	void printNewLocationInfo(String name, int place,
+			QuestionCategory currentCategory) {
+		out.println(name + "'s new location is " + place);
 		out.println("The category is " + currentCategory);
 	}
 
@@ -44,13 +34,21 @@ public class Screen {
 
 	void printCorrectAnswerInfo(String name, int purse) {
 		out.println("Answer was correct!!!!");
-		out.println(name + " now has "
-				+ purse + " Gold Coins.");
+		out.println(name + " now has " + purse + " Gold Coins.");
 	}
 
 	void printWrongAnswerInfo(String name) {
 		out.println("Question was incorrectly answered");
-		out.println(name
-				+ " was sent to the penalty box");
+		out.println(name + " was sent to the penalty box");
+	}
+
+	void printIsGettingOutOfPenaltyBox(String name,
+			boolean gettingOutOfPenaltyBox) {
+		if (!gettingOutOfPenaltyBox) {
+			out.println(name + " is not getting out of the penalty box");
+
+		} else {
+			out.println(name + " is getting out of the penalty box");
+		}
 	}
 }
