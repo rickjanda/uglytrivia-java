@@ -1,19 +1,16 @@
 package com.adaptionsoft.games.uglytrivia;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Game {
-	ArrayList<Player> players = new ArrayList<>();
-
 	// duplicate
 	LinkedList popQuestions = new LinkedList();
 	LinkedList scienceQuestions = new LinkedList();
 	LinkedList sportsQuestions = new LinkedList();
 	LinkedList rockQuestions = new LinkedList();
 
-	int currentPlayerIndex = 0;
+	PlayerPool playerPool = new PlayerPool();
 
 	private PrintStream out;
 
@@ -37,25 +34,17 @@ public class Game {
 		return "Rock Question " + index;
 	}
 
-	public boolean isPlayable() {
-		return (howManyPlayers() >= 2);
-	}
-
 	public boolean add(String playerName) {
 		Player player = new Player(playerName);
-		players.add(player);
+		playerPool.addPlayer(player);
 
 		out.println(playerName + " was added");
-		out.println("They are player number " + howManyPlayers());
+		out.println("They are player number " + playerPool.howManyPlayers());
 		return true;
 	}
 
-	private int howManyPlayers() {
-		return players.size();
-	}
-
 	public void roll(int roll) {
-		Player currentPlayer = getCurrentPlayer();
+		Player currentPlayer = playerPool.getCurrentPlayer();
 		out.println(currentPlayer.getName() + " is the current player");
 		out.println("They have rolled a " + roll);
 
@@ -74,12 +63,8 @@ public class Game {
 		}
 	}
 
-	private Player getCurrentPlayer() {
-		return players.get(currentPlayerIndex);
-	}
-
 	private void advancePlayerAndAskQuestion(int roll) {
-		Player currentPlayer = getCurrentPlayer();
+		Player currentPlayer = playerPool.getCurrentPlayer();
 		currentPlayer.addPlace(roll);
 
 		out.println(currentPlayer.getName() + "'s new location is "
@@ -101,7 +86,7 @@ public class Game {
 	}
 
 	private QuestionCategory currentCategory() {
-		int place = getCurrentPlayer().getPlace();
+		int place = playerPool.getCurrentPlayer().getPlace();
 		if (place % 4 == 0)
 			return QuestionCategory.POP;
 		if (place % 4 == 1)
@@ -112,10 +97,10 @@ public class Game {
 	}
 
 	public boolean wasCorrectlyAnswered() {
-		Player currentPlayer = getCurrentPlayer();
+		Player currentPlayer = playerPool.getCurrentPlayer();
 		if (currentPlayer.isInPenaltyBox()
 				&& !currentPlayer.isGettingOutOfPenaltyBox()) {
-			nextPlayer();
+			playerPool.nextPlayer();
 			return true;
 		}
 		return addPursesAndDidPlayerWin();
@@ -123,30 +108,24 @@ public class Game {
 
 	private boolean addPursesAndDidPlayerWin() {
 		out.println("Answer was correct!!!!");
-		Player currentPlayer = getCurrentPlayer();
+		Player currentPlayer = playerPool.getCurrentPlayer();
 		currentPlayer.addPurse();
 		out.println(currentPlayer.getName() + " now has "
 				+ currentPlayer.getPurse() + " Gold Coins.");
 
-		boolean notWinner = !getCurrentPlayer().didPlayerWin();
-		nextPlayer();
+		boolean notWinner = !currentPlayer.didPlayerWin();
+		playerPool.nextPlayer();
 
 		return notWinner;
 	}
 
-	private void nextPlayer() {
-		currentPlayerIndex++;
-		if (currentPlayerIndex == howManyPlayers())
-			currentPlayerIndex = 0;
-	}
-
 	public boolean wrongAnswer() {
 		out.println("Question was incorrectly answered");
-		out.println(getCurrentPlayer().getName()
+		out.println(playerPool.getCurrentPlayer().getName()
 				+ " was sent to the penalty box");
-		getCurrentPlayer().putIntoPenaltyBox();
+		playerPool.getCurrentPlayer().putIntoPenaltyBox();
 
-		nextPlayer();
+		playerPool.nextPlayer();
 		return true;
 	}
 }
