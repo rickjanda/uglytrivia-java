@@ -39,21 +39,10 @@ public class Game {
 		}
 		
 		currentPlayer.addPlace(roll);
-		screen.printNewLocationInfo(currentPlayer.getName(), currentPlayer.getPlace(), currentCategory());
+		screen.printNewLocationInfo(currentPlayer.getName(), currentPlayer.getPlace(), currentPlayer.currentCategory());
 		
-		String question = questionPool.getQuestion(currentCategory());
+		String question = questionPool.getQuestion(currentPlayer.currentCategory());
 		screen.printQuestion(question);
-	}
-
-	private QuestionCategory currentCategory() {
-		int place = playerPool.getCurrentPlayer().getPlace();
-		if (place % 4 == 0)
-			return QuestionCategory.POP;
-		if (place % 4 == 1)
-			return QuestionCategory.SCIENCE;
-		if (place % 4 == 2)
-			return QuestionCategory.SPORTS;
-		return QuestionCategory.ROCK;
 	}
 
 	public boolean wasCorrectlyAnswered() {

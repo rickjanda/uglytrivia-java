@@ -55,4 +55,15 @@ public class Player {
 	boolean didPlayerWin() {
 		return getPurse() == 6;
 	}
+
+	QuestionCategory currentCategory() {
+		int place = getPlace();
+		if (place % 4 == 0)
+			return QuestionCategory.POP;
+		if (place % 4 == 1)
+			return QuestionCategory.SCIENCE;
+		if (place % 4 == 2)
+			return QuestionCategory.SPORTS;
+		return QuestionCategory.ROCK;
+	}
 }
