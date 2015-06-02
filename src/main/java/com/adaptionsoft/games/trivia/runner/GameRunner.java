@@ -22,7 +22,7 @@ public class GameRunner {
 			//Order of operations not intention revealing
 			//Can't tell what exactly the idea is behind wrongAnswer and wasCorrectlyAnswered.
 			
-			aGame.roll(rand.nextInt(5) + 1);
+			aGame.roll();
 			
 			if (rand.nextInt(9) == 7) {	//Sometimes answer wrongly?
 				notAWinner = aGame.wrongAnswer();

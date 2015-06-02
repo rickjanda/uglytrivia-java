@@ -1,19 +1,22 @@
 package com.adaptionsoft.games.uglytrivia;
 
 import java.io.PrintStream;
+import java.util.Random;
 
 public class Game {
 	PlayerPool playerPool = new PlayerPool();
 	QuestionPool questionPool = new QuestionPool();
 
 	private Screen screen;
+	private Random random;
 
 	public Game() {
-		this(System.out);
+		this(System.out, new Random());
 	}
 
-	Game(PrintStream printStream) {
+	Game(PrintStream printStream, Random random) {
 		screen = new Screen(printStream);
+		this.random = random;
 	}
 
 	public boolean add(String playerName) {
@@ -24,7 +27,9 @@ public class Game {
 		return true;
 	}
 
-	public void roll(int roll) {
+	public void roll() {
+		int roll = random.nextInt(5) + 1;
+		
 		Player currentPlayer = playerPool.getCurrentPlayer();
 		screen.printCurrentPlayer(currentPlayer.getName());
 		screen.printRoll(roll);

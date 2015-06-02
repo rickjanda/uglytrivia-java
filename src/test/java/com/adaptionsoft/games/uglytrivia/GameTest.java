@@ -14,7 +14,7 @@ public class GameTest {
     @Test
     public void test() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        Game aGame = new Game(new PrintStream(out));
+        Game aGame = new Game(new PrintStream(out), new Random());
         aGame.add("Chet");
         boolean actual = aGame.wrongAnswer();
         assertTrue(actual);
@@ -28,18 +28,19 @@ public class GameTest {
     @Test
     public void main() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        Game aGame = new Game(new PrintStream(out));
+        
+        Random rand = new Random(1);
+        Game aGame = new Game(new PrintStream(out), rand);
 
         aGame.add("Chet");
         aGame.add("Pat");
         aGame.add("Sue");
 
-        Random rand = new Random(1);
 
         boolean notAWinner;
         do {
 
-            aGame.roll(rand.nextInt(5) + 1);
+            aGame.roll();
 
             if (rand.nextInt(9) == 7) {
                 notAWinner = aGame.wrongAnswer();
@@ -168,17 +169,18 @@ public class GameTest {
     @Test
     public void main2() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
-        Game aGame = new Game(new PrintStream(out));
+
+        Random rand = new Random(25);
+        Game aGame = new Game(new PrintStream(out), rand);
 
         aGame.add("Chet");
         aGame.add("Pat");
 
-        Random rand = new Random(25);
 
         boolean notAWinner;
         do {
 
-            aGame.roll(rand.nextInt(5) + 1);
+            aGame.roll();
 
             if (rand.nextInt(9) == 7) {
                 notAWinner = aGame.wrongAnswer();
