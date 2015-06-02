@@ -6,39 +6,36 @@ public class Game {
 	PlayerPool playerPool = new PlayerPool();
 	QuestionPool questionPool = new QuestionPool();
 
-	private PrintStream out;
+	private Screen screen;
 
 	public Game() {
 		this(System.out);
 	}
 
 	Game(PrintStream printStream) {
-		out = printStream;
+		screen = new Screen(printStream);
 	}
 
 	public boolean add(String playerName) {
 		Player player = new Player(playerName);
 		playerPool.addPlayer(player);
 
-		out.println(playerName + " was added");
-		out.println("They are player number " + playerPool.howManyPlayers());
+		screen.printPlayerAdded(playerName, playerPool.howManyPlayers());
 		return true;
 	}
 
 	public void roll(int roll) {
 		Player currentPlayer = playerPool.getCurrentPlayer();
-		out.println(currentPlayer.getName() + " is the current player");
-		out.println("They have rolled a " + roll);
+		screen.printCurrentPlayer(currentPlayer.getName());
+		screen.printRoll(roll);
 
 		if (currentPlayer.isInPenaltyBox()) {
 			currentPlayer.setGetOutOfPenaltyBox(roll);
 			if (roll % 2 != 0) {
-				out.println(currentPlayer.getName()
-						+ " is getting out of the penalty box");
+				screen.printIsGettingOutOfPenaltyBox(currentPlayer.getName());
 				advancePlayerAndAskQuestion(roll);
 			} else {
-				out.println(currentPlayer.getName()
-						+ " is not getting out of the penalty box");
+				screen.printIsNotGettingOutOfPenaltyBox(currentPlayer.getName());
 			}
 		} else {
 			advancePlayerAndAskQuestion(roll);
@@ -49,15 +46,13 @@ public class Game {
 		Player currentPlayer = playerPool.getCurrentPlayer();
 		currentPlayer.addPlace(roll);
 
-		out.println(currentPlayer.getName() + "'s new location is "
-				+ currentPlayer.getPlace());
-		out.println("The category is " + currentCategory());
+		screen.printNewLocationInfo(currentPlayer.getName(), currentPlayer.getPlace(), currentCategory());
 		askQuestion();
 	}
 
 	private void askQuestion() {
-		String removeFirst = questionPool.getQuestion(currentCategory());
-		out.println(removeFirst);
+		String question = questionPool.getQuestion(currentCategory());
+		screen.printQuestion(question);
 	}
 
 	private QuestionCategory currentCategory() {
@@ -82,11 +77,9 @@ public class Game {
 	}
 
 	private boolean addPursesAndDidPlayerWin() {
-		out.println("Answer was correct!!!!");
 		Player currentPlayer = playerPool.getCurrentPlayer();
 		currentPlayer.addPurse();
-		out.println(currentPlayer.getName() + " now has "
-				+ currentPlayer.getPurse() + " Gold Coins.");
+		screen.printCorrectAnswerInfo(currentPlayer.getName(), currentPlayer.getPurse());
 
 		boolean notWinner = !currentPlayer.didPlayerWin();
 		playerPool.nextPlayer();
@@ -95,10 +88,9 @@ public class Game {
 	}
 
 	public boolean wrongAnswer() {
-		out.println("Question was incorrectly answered");
-		out.println(playerPool.getCurrentPlayer().getName()
-				+ " was sent to the penalty box");
-		playerPool.getCurrentPlayer().putIntoPenaltyBox();
+		Player currentPlayer = playerPool.getCurrentPlayer();
+		screen.printWrongAnswerInfo(currentPlayer.getName());
+		currentPlayer.putIntoPenaltyBox();
 
 		playerPool.nextPlayer();
 		return true;
