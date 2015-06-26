@@ -2,6 +2,8 @@ package com.adaptionsoft.games.uglytrivia;
 
 import org.junit.Test;
 
+import com.adaptionsoft.games.trivia.runner.GameRunner;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Random;
@@ -37,20 +39,7 @@ public class GameTest {
         aGame.add("Sue");
 
 
-        boolean notAWinner;
-        do {
-
-            aGame.roll();
-
-            if (rand.nextInt(9) == 7) {
-                notAWinner = aGame.wrongAnswer();
-            } else {
-                notAWinner = aGame.wasCorrectlyAnswered();
-            }
-
-
-        } while (notAWinner);
-
+        GameRunner.playGame(aGame, rand);
         assertThat(out.toString().replaceAll("\\r", ""), equalToIgnoringWhiteSpace("Chet was added\n" +
                 "They are player number 1\n" +
                 "Pat was added\n" +
@@ -177,19 +166,7 @@ public class GameTest {
         aGame.add("Pat");
 
 
-        boolean notAWinner;
-        do {
-
-            aGame.roll();
-
-            if (rand.nextInt(9) == 7) {
-                notAWinner = aGame.wrongAnswer();
-            } else {
-                notAWinner = aGame.wasCorrectlyAnswered();
-            }
-
-
-        } while (notAWinner);
+        GameRunner.playGame(aGame, rand);
 
         assertThat(out.toString().replaceAll("\\r", ""), equalToIgnoringWhiteSpace("Chet was added\n" +
                 "They are player number 1\n" +

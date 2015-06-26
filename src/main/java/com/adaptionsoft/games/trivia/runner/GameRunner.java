@@ -18,6 +18,11 @@ public class GameRunner {
 		
 		Random rand = new Random();
 	
+		playGame(aGame, rand);
+		
+	}
+
+	public static void playGame(Game aGame, Random rand) {
 		do {
 			//Order of operations not intention revealing
 			//Can't tell what exactly the idea is behind wrongAnswer and wasCorrectlyAnswered.
@@ -33,6 +38,5 @@ public class GameRunner {
 			
 			
 		} while (notAWinner);
-		
 	}
 }
