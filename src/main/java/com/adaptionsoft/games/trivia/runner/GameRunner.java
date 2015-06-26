@@ -22,10 +22,11 @@ public class GameRunner {
 
 	public static void playGame(Game aGame, Random rand) {
 		do {
-			//Order of operations not intention revealing
-			//Can't tell what exactly the idea is behind wrongAnswer and wasCorrectlyAnswered.
+			int roll = aGame.roll();
 			
-			aGame.roll();
+			if (!aGame.isPlayerStuckInPenaltyBox(roll)) {
+				aGame.moveAndAskQuestion(roll);
+			}
 			
 			if (shouldAnswerRight(rand)) {
 				aGame.answerRight();

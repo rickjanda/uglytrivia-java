@@ -27,27 +27,31 @@ public class Game {
 		return true;
 	}
 
-	public void roll() {
-		int roll = random.nextInt(5) + 1;
-		
+	public boolean isPlayerStuckInPenaltyBox(int roll) {
 		Player currentPlayer = playerPool.getCurrentPlayer();
-		screen.printCurrentPlayer(currentPlayer.getName());
-		screen.printRoll(roll);
-
 		if (currentPlayer.isInPenaltyBox()) {
 			currentPlayer.setGetOutOfPenaltyBox(roll);
 			screen.printIsGettingOutOfPenaltyBox(currentPlayer.getName(), currentPlayer.isGettingOutOfPenaltyBox());
 		} 
 		
-		if (currentPlayer.isStuckInPenaltyBox()) {
-			return;
-		}
-		
+		return currentPlayer.isStuckInPenaltyBox();
+	}
+
+	public void moveAndAskQuestion(int roll) {
+		Player currentPlayer = playerPool.getCurrentPlayer();
 		currentPlayer.addPlace(roll);
 		screen.printNewLocationInfo(currentPlayer.getName(), currentPlayer.getPlace(), currentPlayer.currentCategory());
 		
 		String question = questionPool.getQuestion(currentPlayer.currentCategory());
 		screen.printQuestion(question);
+	}
+
+	public int roll() {
+		int roll = random.nextInt(5) + 1;
+		
+		screen.printCurrentPlayer(playerPool.getCurrentPlayer().getName());
+		screen.printRoll(roll);
+		return roll;
 	}
 
 	public void nextPlayer() {
