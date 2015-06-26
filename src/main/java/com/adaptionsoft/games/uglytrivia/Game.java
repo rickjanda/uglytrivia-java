@@ -27,6 +27,14 @@ public class Game {
 		return true;
 	}
 
+	public int roll() {
+		int roll = random.nextInt(5) + 1;
+		
+		screen.printCurrentPlayer(playerPool.getCurrentPlayer().getName());
+		screen.printRoll(roll);
+		return roll;
+	}
+	
 	public boolean isPlayerStuckInPenaltyBox(int roll) {
 		Player currentPlayer = playerPool.getCurrentPlayer();
 		if (currentPlayer.isInPenaltyBox()) {
@@ -46,28 +54,6 @@ public class Game {
 		screen.printQuestion(question);
 	}
 
-	public int roll() {
-		int roll = random.nextInt(5) + 1;
-		
-		screen.printCurrentPlayer(playerPool.getCurrentPlayer().getName());
-		screen.printRoll(roll);
-		return roll;
-	}
-
-	public void nextPlayer() {
-		playerPool.nextPlayer();
-	}
-	
-	public boolean didLastPlayerWin() {
-		return playerPool.getLastPlayer().didPlayerWin();
-	}
-
-	public void answerWrong() {
-		Player currentPlayer = playerPool.getCurrentPlayer();
-		screen.printWrongAnswerInfo(currentPlayer.getName());
-		currentPlayer.putIntoPenaltyBox();
-	}
-
 	public void answerRight() {
 		Player currentPlayer = playerPool.getCurrentPlayer();
 		if (!currentPlayer.isStuckInPenaltyBox()) {
@@ -75,5 +61,19 @@ public class Game {
 			screen.printCorrectAnswerInfo(currentPlayer.getName(), currentPlayer.getPurse());
 		
 		}
+	}
+	
+	public void answerWrong() {
+		Player currentPlayer = playerPool.getCurrentPlayer();
+		screen.printWrongAnswerInfo(currentPlayer.getName());
+		currentPlayer.putIntoPenaltyBox();
+	}
+	
+	public void nextPlayer() {
+		playerPool.nextPlayer();
+	}
+	
+	public boolean didLastPlayerWin() {
+		return playerPool.getLastPlayer().didPlayerWin();
 	}
 }
