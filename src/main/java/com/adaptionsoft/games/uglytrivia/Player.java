@@ -53,11 +53,10 @@ public class Player {
 	}
 
 	boolean didPlayerWin() {
-		return getPurse() == 6;
+		return purse == 6;
 	}
 
 	QuestionCategory currentCategory() {
-		int place = getPlace();
 		if (place % 4 == 0)
 			return QuestionCategory.POP;
 		if (place % 4 == 1)
@@ -65,5 +64,9 @@ public class Player {
 		if (place % 4 == 2)
 			return QuestionCategory.SPORTS;
 		return QuestionCategory.ROCK;
+	}
+
+	boolean isStuckInPenaltyBox() {
+		return inPenaltyBox && !isGettingOutOfPenaltyBox;
 	}
 }

@@ -39,7 +39,7 @@ public class Game {
 			screen.printIsGettingOutOfPenaltyBox(currentPlayer.getName(), currentPlayer.isGettingOutOfPenaltyBox());
 		} 
 		
-		if (currentPlayer.isInPenaltyBox() && !currentPlayer.isGettingOutOfPenaltyBox()) {
+		if (currentPlayer.isStuckInPenaltyBox()) {
 			return;
 		}
 		
@@ -52,8 +52,7 @@ public class Game {
 
 	public boolean wasCorrectlyAnswered() {
 		Player currentPlayer = playerPool.getCurrentPlayer();
-		if (currentPlayer.isInPenaltyBox()
-				&& !currentPlayer.isGettingOutOfPenaltyBox()) {
+		if (currentPlayer.isStuckInPenaltyBox()) {
 			playerPool.nextPlayer();
 			return true;
 		}
