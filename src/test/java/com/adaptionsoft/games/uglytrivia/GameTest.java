@@ -18,8 +18,7 @@ public class GameTest {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         Game aGame = new Game(new PrintStream(out), new Random());
         aGame.add("Chet");
-        boolean actual = aGame.wrongAnswer();
-        assertTrue(actual);
+        aGame.answerWrong();
         assertThat(out.toString(), equalToIgnoringWhiteSpace("Chet was added\n" +
                 "They are player number 1\n" +
                 "Question was incorrectly answered\n" +

@@ -7,8 +7,6 @@ import com.adaptionsoft.games.uglytrivia.Game;
 
 public class GameRunner {
 
-	private static boolean notAWinner;
-
 	public static void main(String[] args) {
 		Game aGame = new Game();	//What kind of Game?
 		
@@ -29,14 +27,17 @@ public class GameRunner {
 			
 			aGame.roll();
 			
-			if (rand.nextInt(9) == 7) {	//Sometimes answer wrongly?
-				notAWinner = aGame.wrongAnswer();
+			if (shouldAnswerRight(rand)) {
+				aGame.answerRight();
 			} else {
-				notAWinner = aGame.wasCorrectlyAnswered();
+				aGame.answerWrong();
 			}
 			
-			
-			
-		} while (notAWinner);
+			aGame.nextPlayer();
+		} while (!aGame.didLastPlayerWin());
+	}
+
+	private static boolean shouldAnswerRight(Random rand) {
+		return rand.nextInt(9) != 7;
 	}
 }

@@ -32,7 +32,7 @@ public class Screen {
 		out.println(question);
 	}
 
-	void printCorrectAnswerInfo(String name, int purse) {
+	public void printCorrectAnswerInfo(String name, int purse) {
 		out.println("Answer was correct!!!!");
 		out.println(name + " now has " + purse + " Gold Coins.");
 	}

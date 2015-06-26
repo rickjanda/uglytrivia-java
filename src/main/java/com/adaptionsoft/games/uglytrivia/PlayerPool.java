@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class PlayerPool {
 	private ArrayList<Player> players;
 	private int currentPlayerIndex;
+	private int lastPlayerIndex;
 
 	public PlayerPool() {
 		this.players = new ArrayList<Player>();
@@ -23,9 +24,14 @@ public class PlayerPool {
 		return players.get(currentPlayerIndex);
 	}
 
+	public Player getLastPlayer() {
+		return players.get(lastPlayerIndex);
+	}
+
 	public void nextPlayer() {
+		lastPlayerIndex = currentPlayerIndex;
 		currentPlayerIndex++;
-		if (currentPlayerIndex == howManyPlayers())
+		if (currentPlayerIndex == players.size())
 			currentPlayerIndex = 0;
 	}
 

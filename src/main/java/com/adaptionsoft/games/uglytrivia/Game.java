@@ -4,10 +4,10 @@ import java.io.PrintStream;
 import java.util.Random;
 
 public class Game {
-	PlayerPool playerPool = new PlayerPool();
+	public PlayerPool playerPool = new PlayerPool();
 	QuestionPool questionPool = new QuestionPool();
 
-	private Screen screen;
+	public Screen screen;
 	private Random random;
 
 	public Game() {
@@ -50,27 +50,26 @@ public class Game {
 		screen.printQuestion(question);
 	}
 
-	public boolean wasCorrectlyAnswered() {
-		Player currentPlayer = playerPool.getCurrentPlayer();
-		if (currentPlayer.isStuckInPenaltyBox()) {
-			playerPool.nextPlayer();
-			return true;
-		}
-		
-		currentPlayer.addPurse();
-		screen.printCorrectAnswerInfo(currentPlayer.getName(), currentPlayer.getPurse());
-		
+	public void nextPlayer() {
 		playerPool.nextPlayer();
-		
-		return !currentPlayer.didPlayerWin();
+	}
+	
+	public boolean didLastPlayerWin() {
+		return playerPool.getLastPlayer().didPlayerWin();
 	}
 
-	public boolean wrongAnswer() {
+	public void answerWrong() {
 		Player currentPlayer = playerPool.getCurrentPlayer();
 		screen.printWrongAnswerInfo(currentPlayer.getName());
 		currentPlayer.putIntoPenaltyBox();
+	}
 
-		playerPool.nextPlayer();
-		return true;
+	public void answerRight() {
+		Player currentPlayer = playerPool.getCurrentPlayer();
+		if (!currentPlayer.isStuckInPenaltyBox()) {
+			currentPlayer.addPurse();
+			screen.printCorrectAnswerInfo(currentPlayer.getName(), currentPlayer.getPurse());
+		
+		}
 	}
 }

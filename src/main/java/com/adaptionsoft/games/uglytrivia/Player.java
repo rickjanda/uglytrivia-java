@@ -66,7 +66,7 @@ public class Player {
 		return QuestionCategory.ROCK;
 	}
 
-	boolean isStuckInPenaltyBox() {
+	public boolean isStuckInPenaltyBox() {
 		return inPenaltyBox && !isGettingOutOfPenaltyBox;
 	}
 }
